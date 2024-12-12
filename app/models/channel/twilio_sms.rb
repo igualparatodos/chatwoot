@@ -55,6 +55,10 @@ class Channel::TwilioSms < ApplicationRecord
     client.messages.create(**params)
   end
 
+  def fetch_message(message_sid)
+    client.messages(message_sid).fetch
+  end
+
   private
 
   def client
