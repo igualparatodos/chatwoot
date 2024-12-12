@@ -19,8 +19,8 @@ class Twilio::SendOnTwilioService < Base::SendOnChannelService
       body: message.content,
       to: contact_inbox.source_id,
       media_url: attachments,
-      template_id: message.template_id,
-      template_variables: message.template_variables
+      template_id: content_attributes.dig(:template_id),
+      template_variables: content_attributes.dig(:template_variables)
     }
   end
 
