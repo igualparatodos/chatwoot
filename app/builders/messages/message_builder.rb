@@ -14,6 +14,8 @@ class Messages::MessageBuilder
 
     @in_reply_to = content_attributes&.dig(:in_reply_to)
     @in_reply_to_external_id = content_attributes&.dig(:in_reply_to_external_id)
+    @template_id = content_attributes&.dig(:template_id)
+    @template_variables = content_attributes&.dig(:template_variables)
     @items = content_attributes&.dig(:items)
   end
 
@@ -151,6 +153,8 @@ class Messages::MessageBuilder
       items: @items,
       in_reply_to: @in_reply_to,
       in_reply_to_external_id: @in_reply_to_external_id,
+      template_id: @template_id,
+      template_variables: @template_variables,
       echo_id: @params[:echo_id],
       source_id: @params[:source_id]
     }.merge(external_created_at).merge(automation_rule_id).merge(campaign_id).merge(template_params)

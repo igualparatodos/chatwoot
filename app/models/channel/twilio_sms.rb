@@ -45,10 +45,12 @@ class Channel::TwilioSms < ApplicationRecord
     medium == 'whatsapp'
   end
 
-  def send_message(to:, body:, media_url: nil)
+  def send_message(to:, body:, media_url: nil, template_id:, template_variables:)
     params = send_message_from.merge(to: to, body: body)
     params[:media_url] = media_url if media_url.present?
     params[:status_callback] = twilio_delivery_status_index_url
+    params[:content_sid] = template_id
+    params[:content_variables] = template_variables
     client.messages.create(**params)
   end
 
