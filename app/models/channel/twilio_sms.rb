@@ -49,8 +49,9 @@ class Channel::TwilioSms < ApplicationRecord
     params = send_message_from.merge(to: to, body: body)
     params[:media_url] = media_url if media_url.present?
     params[:status_callback] = twilio_delivery_status_index_url
-    params[:content_sid] = template_id
-    params[:content_variables] = template_variables
+    params[:body] = body if body.present?
+    params[:content_sid] = template_id if template_id.present?
+    params[:content_variables] = template_variables  if template_variables.present?
     client.messages.create(**params)
   end
 
