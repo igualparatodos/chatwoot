@@ -8,6 +8,11 @@ class Twilio::SendOnTwilioService < Base::SendOnChannelService
   def perform_reply
     begin
       twilio_message = channel.send_message(**message_params)
+      if message.content_attributes.dig(:template_id)
+        sent_twilio_message = client.messages(twilio_message.sid).fetch
+        message.update!(source_id: twilio_message.sid, content: sent_twilio_message.body) if sent_twilio_message
+      end
+
     rescue Twilio::REST::TwilioError, Twilio::REST::RestError => e
       message.update!(status: :failed, external_error: e.message)
     end
