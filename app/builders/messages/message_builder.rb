@@ -136,7 +136,7 @@ class Messages::MessageBuilder
   end
 
   def status_params
-    params[:source_id].present? ? {} : { status: :delivered }
+    @params[:source_id].present? ? {} : { status: :delivered }
   end
 
   def message_sender
