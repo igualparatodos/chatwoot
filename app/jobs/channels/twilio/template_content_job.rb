@@ -1,4 +1,4 @@
-class Channels::Twilio::TemplateContent < ApplicationJob
+class Channels::Twilio::TemplateContentJob < ApplicationJob
   queue_as :medium
 
   def perform(record_id)
