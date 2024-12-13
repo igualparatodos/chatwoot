@@ -91,6 +91,8 @@ Rails.application.routes.draw do
                 member do
                   post :translate
                   post :retry
+                  post :set_sent_external_source
+                  post :set_read
                 end
               end
               resources :assignments, only: [:create]

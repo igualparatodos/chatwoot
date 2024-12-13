@@ -135,6 +135,10 @@ class Messages::MessageBuilder
     @params[:template_params].present? ? { additional_attributes: { template_params: JSON.parse(@params[:template_params].to_json) } } : {}
   end
 
+  def status_params
+    params[:source_id].present? ? {} : { status: :delivered }
+  end
+
   def message_sender
     return if @params[:sender_type] != 'AgentBot'
 
@@ -157,6 +161,6 @@ class Messages::MessageBuilder
       template_variables: @template_variables,
       echo_id: @params[:echo_id],
       source_id: @params[:source_id]
-    }.merge(external_created_at).merge(automation_rule_id).merge(campaign_id).merge(template_params)
+    }.merge(external_created_at).merge(automation_rule_id).merge(campaign_id).merge(template_params).merge(status_params)
   end
 end

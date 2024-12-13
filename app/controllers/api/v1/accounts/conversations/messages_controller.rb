@@ -45,6 +45,20 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     render json: { content: translated_content }
   end
 
+  def set_sent_external_source
+    user = Current.user || @resource
+    ActiveRecord::Base.transaction do
+      message.update!(status: :sent, source_id: set_external_identifier_params[:source_id])
+    end
+  end
+
+  def set_read
+    user = Current.user || @resource
+    ActiveRecord::Base.transaction do
+      message.update!(status: :read)
+    end
+  end
+
   private
 
   def message
@@ -56,6 +70,10 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   end
 
   def permitted_params
+    params.permit(:id, :target_language)
+  end
+
+  def set_external_identifier_params
     params.permit(:id, :target_language)
   end
 
