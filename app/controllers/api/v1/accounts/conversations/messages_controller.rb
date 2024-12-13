@@ -45,9 +45,17 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     render json: { content: translated_content }
   end
 
-  def set_sent_external_source
+  def set_external_source
     ActiveRecord::Base.transaction do
-      message.update!(status: :sent, source_id: set_external_identifier_params[:source_id])
+      message.update!(source_id: set_external_identifier_params[:source_id])
+    end
+  end
+
+  def set_sent
+    message = Message.find_by!(source_id: set_external_identifier_params[:source_id]) if message.blank?
+
+    ActiveRecord::Base.transaction do
+      message.update!(status: :sent)
     end
   end
 
@@ -56,6 +64,15 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
 
     ActiveRecord::Base.transaction do
       message.update!(status: :read)
+    end
+  end
+
+
+  def set_failed
+    message = Message.find_by!(source_id: set_external_identifier_params[:source_id]) if message.blank?
+
+    ActiveRecord::Base.transaction do
+      message.update!(status: :failed)
     end
   end
 
