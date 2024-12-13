@@ -11,7 +11,7 @@ class Channels::Twilio::TemplateContentJob < ApplicationJob
     if twilio_message.body.present?
       message.update!(content: twilio_message.body)
     else
-      self.class.set(wait: 1.minute).perform_later(record_id)
+      self.class.set(wait: 5.seconds).perform_later(record_id)
     end
   end
 end
