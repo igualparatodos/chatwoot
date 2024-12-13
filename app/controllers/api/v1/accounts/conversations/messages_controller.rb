@@ -74,7 +74,7 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   end
 
   def set_external_identifier_params
-    params.permit(:id, :target_language)
+    params.permit(:id, :source_id)
   end
 
   def already_translated_content_available?
