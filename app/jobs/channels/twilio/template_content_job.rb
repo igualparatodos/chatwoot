@@ -3,6 +3,8 @@ class Channels::Twilio::TemplateContentJob < ApplicationJob
 
   def perform(record_id)
     message = Message.find(record_id)
+    inbox = message.inbox
+    channel = inbox.channel
 
     twilio_message = channel.fetch_message(message.source_id)
 
@@ -11,15 +13,5 @@ class Channels::Twilio::TemplateContentJob < ApplicationJob
     else
       self.class.set(wait: 1.minute).perform_later(record_id)
     end
-  end
-
-  private
-
-  def inbox
-    @inbox ||= message.inbox
-  end
-
-  def channel
-    @channel ||= inbox.channel
   end
 end
