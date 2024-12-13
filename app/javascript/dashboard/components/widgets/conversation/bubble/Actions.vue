@@ -145,7 +145,7 @@ export default {
         return this.sourceId && this.isDelivered;
       }
       // All messages marked as delivered for the web widget inbox and API inbox once they are sent.
-      if (this.isAWebWidgetInbox || this.isAPIInbox) {
+      if (this.isAWebWidgetInbox) {
         return this.isSent;
       }
       if (this.isALineChannel) {
