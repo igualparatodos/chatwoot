@@ -121,7 +121,8 @@ export default {
         this.isATwilioChannel ||
         this.isAFacebookInbox ||
         this.isASmsInbox ||
-        this.isATelegramChannel
+        this.isATelegramChannel ||
+        this.isAPIInbox
       ) {
         return this.sourceId && this.isSent;
       }
@@ -140,7 +141,8 @@ export default {
         this.isAWhatsAppChannel ||
         this.isATwilioChannel ||
         this.isASmsInbox ||
-        this.isAFacebookInbox
+        this.isAFacebookInbox ||
+        this.isAPIInbox
       ) {
         return this.sourceId && this.isDelivered;
       }

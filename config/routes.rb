@@ -92,7 +92,7 @@ Rails.application.routes.draw do
                   post :translate
                   post :retry
                   post :set_external_source
-                  post :set_sent
+                  post :set_delivered
                   post :set_read
                   post :set_failed
                 end

@@ -51,11 +51,11 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     end
   end
 
-  def set_sent
+  def set_delivered
     message = Message.find_by!(source_id: set_external_identifier_params[:source_id]) if message.blank?
 
     ActiveRecord::Base.transaction do
-      message.update!(status: :sent)
+      message.update!(status: :delivered)
     end
   end
 
