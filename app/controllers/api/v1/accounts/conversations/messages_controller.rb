@@ -46,14 +46,14 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   end
 
   def set_sent_external_source
-    user = Current.user || @resource
     ActiveRecord::Base.transaction do
       message.update!(status: :sent, source_id: set_external_identifier_params[:source_id])
     end
   end
 
   def set_read
-    user = Current.user || @resource
+    message = Message.find_by!(source_id: set_external_identifier_params[:source_id]) if message.blank?
+
     ActiveRecord::Base.transaction do
       message.update!(status: :read)
     end
