@@ -12,7 +12,7 @@ class Twilio::SendOnTwilioService < Base::SendOnChannelService
       message.update!(status: :failed, external_error: e.message)
     end
     message.update!(source_id: twilio_message.sid) if twilio_message
-    Channels::Twilio::TemplateContent.perform_later(message.id)
+    Channels::Twilio::TemplateContentJob.perform_later(message.id) if message.content_attributes.dig(:template_id)
   end
 
   def message_params
