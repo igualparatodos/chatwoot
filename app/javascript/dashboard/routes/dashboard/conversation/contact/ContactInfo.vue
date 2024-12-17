@@ -258,7 +258,7 @@ export default {
             :title="$t('CONTACT_PANEL.COMPANY')"
           />
           <ContactInfoRow
-            v-if="location || additionalAttributes.location"
+            v-if="isAdmin && (location || additionalAttributes.location)"
             :value="location || additionalAttributes.location"
             icon="map"
             emoji="🌍"
@@ -276,6 +276,7 @@ export default {
           @click="toggleConversationModal"
         />
         <woot-button
+          v-if="isAdmin"
           v-tooltip="$t('EDIT_CONTACT.BUTTON_LABEL')"
           :title="$t('EDIT_CONTACT.BUTTON_LABEL')"
           icon="edit"
@@ -284,6 +285,7 @@ export default {
           @click="toggleEditModal"
         />
         <woot-button
+          v-if="isAdmin"
           v-tooltip="$t('CONTACT_PANEL.MERGE_CONTACT')"
           :title="$t('CONTACT_PANEL.MERGE_CONTACT')"
           icon="merge"
@@ -306,7 +308,7 @@ export default {
         />
       </div>
       <EditContact
-        v-if="showEditModal"
+        v-if="isAdmin && showEditModal"
         :show="showEditModal"
         :contact="contact"
         @cancel="toggleEditModal"
@@ -318,14 +320,14 @@ export default {
         @cancel="toggleConversationModal"
       />
       <ContactMergeModal
-        v-if="showMergeModal"
+        v-if="isAdmin && showMergeModal"
         :primary-contact="contact"
         :show="showMergeModal"
         @close="closeMergeModal"
       />
     </div>
     <woot-delete-modal
-      v-if="showDeleteModal"
+      v-if="isAdmin && showDeleteModal"
       v-model:show="showDeleteModal"
       :on-close="closeDelete"
       :on-confirm="confirmDeletion"

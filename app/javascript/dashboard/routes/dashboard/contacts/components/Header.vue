@@ -188,6 +188,7 @@ export default {
             {{ $t('CONTACTS_PAGE.FILTER_CONTACTS_SAVE') }}
           </woot-button>
           <woot-button
+            v-if="isAdmin"
             class="clear [&>span]:hidden xs:[&>span]:block"
             color-scheme="success"
             icon="person-add"
