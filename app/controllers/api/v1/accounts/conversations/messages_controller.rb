@@ -19,7 +19,7 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   end
 
   def retry
-    return if message.blank?
+    retucreatern if message.blank?
 
     message.update!(status: :sent, content_attributes: {})
     ::SendReplyJob.perform_later(message.id)
@@ -74,6 +74,10 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     ActiveRecord::Base.transaction do
       message.update!(status: :failed)
     end
+  end
+
+  def show
+    message
   end
 
   private
