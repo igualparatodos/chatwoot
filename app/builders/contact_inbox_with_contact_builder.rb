@@ -51,7 +51,7 @@ class ContactInboxWithContactBuilder
   def create_contact
     account.contacts.create!(
       name: contact_attributes[:name] || ::Haikunator.haikunate(1000),
-      phone_number: contact_attributes[:phone_number],
+      phone_number: format_brazilian_cellphone(contact_attributes[:phone_number]),
       email: contact_attributes[:email],
       identifier: contact_attributes[:identifier],
       additional_attributes: contact_attributes[:additional_attributes],
@@ -63,6 +63,7 @@ class ContactInboxWithContactBuilder
     contact = find_contact_by_identifier(contact_attributes[:identifier])
     contact ||= find_contact_by_email(contact_attributes[:email])
     contact ||= find_contact_by_phone_number(contact_attributes[:phone_number])
+    contact ||= find_contact_by_phone_number(format_brazilian_cellphone(contact_attributes[:phone_number]))
     contact
   end
 
@@ -82,5 +83,22 @@ class ContactInboxWithContactBuilder
     return if phone_number.blank?
 
     account.contacts.find_by(phone_number: phone_number)
+  end
+
+  def format_brazilian_cellphone(number)
+    digits = number.gsub(/\D/, "")
+
+    if digits.match(/^55\d{10}$/)
+      area_code = digits[2..3]
+      phone_number = digits[4..-1]
+
+      if phone_number.match(/^[6-9]/)
+        phone_number = "9#{phone_number}"
+      end
+
+      return "+55#{area_code}#{phone_number}"
+    end
+
+    number
   end
 end
