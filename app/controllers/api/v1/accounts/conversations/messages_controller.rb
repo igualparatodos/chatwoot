@@ -8,7 +8,7 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     mb = Messages::MessageBuilder.new(user, @conversation, params)
     @message = mb.perform
 
-    if @message.inbox.api? && @message.outgoing? && not @message.private?
+    if @message.inbox.api? && @message.outgoing? &&  !@message.private?
       Channels::Api::WahaSourceIdJob.set(wait: 5.seconds).perform_later(@message.id)
     end
   rescue StandardError => e
