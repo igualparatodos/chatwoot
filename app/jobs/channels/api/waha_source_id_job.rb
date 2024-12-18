@@ -14,7 +14,7 @@ class Channels::Api::WahaSourceIdJob < ApplicationJob
       params = {
         private: true,
         content: "Erro: mensagem não enviada.",
-        in_reply_to: record_id
+        content_attributes: { in_reply_to: record_id }
       }
       Messages::MessageBuilder.new(message.sender, conversation, params).perform
       Rails.logger.error "Job failed after #{MAX_RETRIES} retries for record ID #{record_id}"
