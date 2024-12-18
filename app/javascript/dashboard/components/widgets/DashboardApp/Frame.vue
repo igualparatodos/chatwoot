@@ -35,6 +35,7 @@ export default {
         conversation: this.currentChat,
         contact: this.$store.getters['contacts/getContact'](this.contactId),
         currentAgent: this.currentAgent,
+        theme: document.getElementsByTagName('html')[0].style.colorScheme
       };
     },
     contactId() {
