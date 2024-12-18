@@ -13,7 +13,7 @@ class Channels::Api::WahaSourceIdJob < ApplicationJob
       conversation = message.conversation
       params = {
         private: true,
-        content: "Erro: mensagem não enviada.",
+        content: "Mensagem não enviada: #{message.content}",
         content_attributes: { in_reply_to: record_id }
       }
       Messages::MessageBuilder.new(message.sender, conversation, params).perform
