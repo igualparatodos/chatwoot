@@ -25,10 +25,6 @@ class Messages::MessageBuilder
     process_emails
     @message.save!
     @message
-
-    if @message.inbox.api? && @message.outgoing? && @message.inbox.channel.additional_attributes.dig(:channel) && !@message.private?
-      Channels::Api::WahaSourceIdJob.set(wait: 10.seconds).perform_later(message.id)
-    end
   end
 
   private
