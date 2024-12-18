@@ -25,6 +25,11 @@ class Messages::MessageBuilder
     process_emails
     @message.save!
     @message
+
+
+    if @message.inbox.api? && @message.outgoing? && @message.inbox.channel.additional_attributes.dig(:channel)
+      Channels::Api::WahaSourceIdJob.set(wait: 10.seconds).perform_later(message.id) if message.content_attributes.dig(:template_id)
+    end
   end
 
   private

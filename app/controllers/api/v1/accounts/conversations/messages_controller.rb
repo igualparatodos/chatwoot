@@ -19,7 +19,7 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   end
 
   def retry
-    retucreatern if message.blank?
+    return if message.blank?
 
     message.update!(status: :sent, content_attributes: {})
     ::SendReplyJob.perform_later(message.id)
