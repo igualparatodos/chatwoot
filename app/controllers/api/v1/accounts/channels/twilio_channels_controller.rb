@@ -37,7 +37,7 @@ class Api::V1::Accounts::Channels::TwilioChannelsController < Api::V1::Accounts:
   def phone_number
     return if permitted_params[:phone_number].blank?
 
-    medium == 'sms' ? permitted_params[:phone_number] : "whatsapp:#{permitted_params[:phone_number]}"
+    medium == 'sms' ? permitted_params[:phone_number] : "whatsapp:#{format_brazilian_cellphone(permitted_params[:phone_number])}"
   end
 
   def medium
@@ -63,5 +63,22 @@ class Api::V1::Accounts::Channels::TwilioChannelsController < Api::V1::Accounts:
     params.require(:twilio_channel).permit(
       :account_id, :messaging_service_sid, :phone_number, :account_sid, :auth_token, :name, :medium, :api_key_sid
     )
+  end
+
+  def format_brazilian_cellphone(number)
+    digits = number.gsub(/\D/, "")
+
+    if digits.match(/^55\d{10}$/)
+      area_code = digits[2..3]
+      phone_number = digits[4..-1]
+
+      if phone_number.match(/^[6-9]/)
+        phone_number = "9#{phone_number}"
+      end
+
+      return "+55#{area_code}#{phone_number}"
+    end
+
+    number
   end
 end

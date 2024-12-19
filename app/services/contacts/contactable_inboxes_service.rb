@@ -67,7 +67,24 @@ class Contacts::ContactableInboxesService
     when 'sms'
       { source_id: @contact.phone_number, inbox: inbox }
     when 'whatsapp'
-      { source_id: "whatsapp:#{@contact.phone_number}", inbox: inbox }
+      { source_id: "whatsapp:#{format_brazilian_cellphone(@contact.phone_number)}", inbox: inbox }
     end
+  end
+
+  def format_brazilian_cellphone(number)
+    digits = number.gsub(/\D/, "")
+
+    if digits.match(/^55\d{10}$/)
+      area_code = digits[2..3]
+      phone_number = digits[4..-1]
+
+      if phone_number.match(/^[6-9]/)
+        phone_number = "9#{phone_number}"
+      end
+
+      return "+55#{area_code}#{phone_number}"
+    end
+
+    number
   end
 end
