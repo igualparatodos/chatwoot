@@ -14,8 +14,11 @@ class ContactInboxWithContactBuilder
   end
 
   def find_or_create_contact_and_contact_inbox
-    check_twilio_with_9 = "whatsapp:#{format_brazilian_cellphone(contact_attributes[:phone_number])}"
-    @contact_inbox = inbox.contact_inboxes.find_by(source_id: [source_id, check_twilio_with_9]) if source_id.present?
+    source_ids = []
+    source_ids << source_id if source_id.present?
+    source_ids << "whatsapp:#{format_brazilian_cellphone(contact_attributes[:phone_number])}" if contact_attributes[:phone_number].present?
+
+    @contact_inbox = inbox.contact_inboxes.find_by(source_id: source_ids) if source_ids.any?
     return @contact_inbox if @contact_inbox
 
     ActiveRecord::Base.transaction(requires_new: true) do
