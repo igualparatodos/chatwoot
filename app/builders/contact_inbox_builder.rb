@@ -54,7 +54,7 @@ class ContactInboxBuilder
     when 'sms'
       @contact.phone_number
     when 'whatsapp'
-      "whatsapp:#{@contact.phone_number}"
+      "whatsapp:#{format_brazilian_cellphone(@contact.phone_number)}"
     end
   end
 
@@ -64,5 +64,22 @@ class ContactInboxBuilder
       inbox_id: @inbox.id,
       source_id: @source_id
     )
+  end
+
+  def format_brazilian_cellphone(number)
+    digits = number.gsub(/\D/, "")
+
+    if digits.match(/^55\d{10}$/)
+      area_code = digits[2..3]
+      phone_number = digits[4..-1]
+
+      if phone_number.match(/^[6-9]/)
+        phone_number = "9#{phone_number}"
+      end
+
+      return "+55#{area_code}#{phone_number}"
+    end
+
+    number
   end
 end
