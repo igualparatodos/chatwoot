@@ -2,7 +2,7 @@ class Channels::Api::WahaSourceIdJob < ApplicationJob
   queue_as :medium
 
   # Max retries
-  MAX_RETRIES = 5
+  MAX_RETRIES = 10
 
   def perform(record_id, retry_count = 0)
     Rails.logger.info "Job to check waha message status for #{record_id}"
@@ -23,7 +23,7 @@ class Channels::Api::WahaSourceIdJob < ApplicationJob
 
     unless message.source_id.present?
       Rails.logger.info "Retrying job for record ID #{record_id}, attempt #{retry_count + 1}"
-      self.class.set(wait: 5.seconds).perform_later(record_id, retry_count + 1)
+      self.class.set(wait: 10.seconds).perform_later(record_id, retry_count + 1)
     end
   end
 end
