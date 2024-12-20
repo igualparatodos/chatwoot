@@ -18,7 +18,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'ReplyBottomPanel',
-  components: { FileUpload },
+  components: { FileUpload, VideoCallButton, AIAssistanceButton },
   mixins: [inboxMixin],
   props: {
     mode: {
