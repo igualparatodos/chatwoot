@@ -71,13 +71,13 @@ const columns = [
   columnHelper.accessor('name', {
     header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.NAME'),
     cell: cellProps => h(NameCell, cellProps),
-    size: 250,
+    size: 450,
   }),
-  columnHelper.accessor('email', {
-    header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.EMAIL_ADDRESS'),
-    cell: cellProps => h(EmailCell, { email: cellProps.getValue() }),
-    size: 250,
-  }),
+  // columnHelper.accessor('email', {
+  //   header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.EMAIL_ADDRESS'),
+  //   cell: cellProps => h(EmailCell, { email: cellProps.getValue() }),
+  //   size: 250,
+  // }),
   columnHelper.accessor('phone_number', {
     header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.PHONE_NUMBER'),
     size: 200,
@@ -87,34 +87,26 @@ const columns = [
         defaultCountry: cellProps.row.original.country_code,
       }),
   }),
-  columnHelper.accessor('company_name', {
-    header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.COMPANY'),
-    size: 200,
-    cell: defaulSpanRender,
-  }),
-  columnHelper.accessor('city', {
-    header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.CITY'),
-    cell: defaulSpanRender,
-    size: 200,
-  }),
-  columnHelper.accessor('country', {
-    header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.COUNTRY'),
-    size: 200,
-    cell: cellProps =>
-      h(CountryCell, {
-        countryCode: cellProps.row.original.country_code,
-        country: cellProps.getValue(),
-      }),
-  }),
-  columnHelper.accessor('profiles', {
-    header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.SOCIAL_PROFILES'),
-    size: 200,
-    enableSorting: false,
-    cell: cellProps =>
-      h(ProfilesCell, {
-        profiles: cellProps.getValue(),
-      }),
-  }),
+  // columnHelper.accessor('company_name', {
+  //   header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.COMPANY'),
+  //   size: 200,
+  //   cell: defaulSpanRender,
+  // }),
+  // columnHelper.accessor('city', {
+  //   header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.CITY'),
+  //   cell: defaulSpanRender,
+  //   size: 200,
+  // }),
+  // columnHelper.accessor('country', {
+  //   header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.COUNTRY'),
+  //   size: 200,
+  //   cell: cellProps =>
+  //     h(CountryCell, {
+  //       countryCode: cellProps.row.original.country_code,
+  //       country: cellProps.getValue(),
+  //     }),
+  // }),
+  // column\
   columnHelper.accessor('last_activity_at', {
     header: t('CONTACTS_PAGE.LIST.TABLE_HEADER.LAST_ACTIVITY'),
     size: 200,
