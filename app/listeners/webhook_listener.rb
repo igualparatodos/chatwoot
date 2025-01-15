@@ -83,6 +83,20 @@ class WebhookListener < BaseListener
     deliver_account_webhooks(payload, account)
   end
 
+  def conversation_typing_on(event)
+    conversation = event.data[:conversation]
+    inbox = conversation.inbox
+    payload = conversation.webhook_data.merge(event: __method__.to_s)
+    deliver_webhook_payloads(payload, inbox)
+  end
+
+  def conversation_typing_off(event)
+    conversation = event.data[:conversation]
+    inbox = conversation.inbox
+    payload = conversation.webhook_data.merge(event: __method__.to_s)
+    deliver_webhook_payloads(payload, inbox)
+  end
+
   private
 
   def deliver_account_webhooks(payload, account)
