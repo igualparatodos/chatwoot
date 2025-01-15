@@ -22,13 +22,7 @@ class ContactInboxBuilder
     when 'Channel::Sms'
       phone_source_id
     when 'Channel::Api', 'Channel::WebWidget'
-      if @inbox.channel&.additional_attributes&.dig('channel').present?
-        firm_phone = @inbox.channel&.additional_attributes&.dig('fullphone').split('@').first
-        contact_phone = @contact.phone_number.sub(/^\+/, '')
-        "waha:#{firm_phone}:#{contact_phone}"
-      else
-        SecureRandom.uuid
-      end
+      SecureRandom.uuid
     else
       raise "Unsupported operation for this channel: #{@inbox.channel_type}"
     end
