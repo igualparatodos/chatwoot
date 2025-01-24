@@ -20,6 +20,7 @@ import conversationLabels from './modules/conversationLabels';
 import conversationMetadata from './modules/conversationMetadata';
 import conversationPage from './modules/conversationPage';
 import conversations from './modules/conversations';
+import conversationRecordingStatus from './modules/conversationRecordingStatus'
 import conversationSearch from './modules/conversationSearch';
 import conversationStats from './modules/conversationStats';
 import conversationTypingStatus from './modules/conversationTypingStatus';
@@ -70,6 +71,7 @@ export default createStore({
     conversationMetadata,
     conversationPage,
     conversations,
+    conversationRecordingStatus,
     conversationSearch,
     conversationStats,
     conversationTypingStatus,

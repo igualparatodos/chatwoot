@@ -892,6 +892,7 @@ export default {
       const isPrivate = this.isPrivate;
 
       if (!conversationId) {
+        console.log('no conversation id')
         return;
       }
 
