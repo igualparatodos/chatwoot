@@ -883,10 +883,10 @@ export default {
       });
     },
     toggleRecording(status) {
-      console.log('toggle recording');
+      console.log('toggle recording:' + status);
       const conversationId = this.currentChat.id;
       const isPrivate = this.isPrivate;
-      
+
       this.hasRecordStarted = status === 'on';
 
       if (!conversationId) {
