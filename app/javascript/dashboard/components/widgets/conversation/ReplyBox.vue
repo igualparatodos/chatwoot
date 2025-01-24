@@ -117,6 +117,7 @@ export default {
       showArticleSearchPopover: false,
       hasRecordedAudio: false,
       hasRecordStarted: false,
+      hasRecordStopped: true,
     };
   },
   computed: {
@@ -851,7 +852,7 @@ export default {
       this.isFocused = true;
     },
     onRecordProgressChanged(duration) {
-      if (!this.hasRecordStarted && !this.isRecordingAudio) {
+      if (!this.hasRecordStarted && this.hasRecordStopped) {
         this.toggleRecording('on');
       }
       this.recordingAudioDurationText = duration;
@@ -887,6 +888,7 @@ export default {
       const isPrivate = this.isPrivate;
 
       this.hasRecordStarted = status === 'on';
+      this.hasRecordStopped = status === 'off';
 
       if (!conversationId) {
         console.log('no conversation id')
