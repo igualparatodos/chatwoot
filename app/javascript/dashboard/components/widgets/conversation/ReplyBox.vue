@@ -821,9 +821,11 @@ export default {
         return;
       }
       if (!this.isRecorderAudioStopped) {
+        this.toggleRecording('on');
         this.isRecorderAudioStopped = true;
         this.$refs.audioRecorderInput.stopRecording();
       } else if (this.isRecorderAudioStopped) {
+        this.toggleRecording('off');
         this.$refs.audioRecorderInput.playPause();
       }
     },
@@ -840,6 +842,12 @@ export default {
     },
     onTypingOff() {
       this.toggleTyping('off');
+    },
+    onRecordingOn() {
+      this.toggleRecording('on');
+    },
+    onRecordingOff() {
+      this.toggleRecording('off');
     },
     onBlur() {
       this.isFocused = false;
@@ -871,6 +879,20 @@ export default {
       }
 
       this.$store.dispatch('conversationTypingStatus/toggleTyping', {
+        status,
+        conversationId,
+        isPrivate,
+      });
+    },
+    toggleRecording(status) {
+      const conversationId = this.currentChat.id;
+      const isPrivate = this.isPrivate;
+
+      if (!conversationId) {
+        return;
+      }
+
+      this.$store.dispatch('conversationRecordingStatus/toggleRecording', {
         status,
         conversationId,
         isPrivate,
@@ -1055,6 +1077,7 @@ export default {
       this.showArticleSearchPopover = !this.showArticleSearchPopover;
     },
     resetAudioRecorderInput() {
+      this.toggleRecording('off');
       this.recordingAudioDurationText = '00:00';
       this.isRecordingAudio = false;
       this.recordingAudioState = '';
@@ -1140,6 +1163,8 @@ export default {
         :send-with-signature="sendWithSignature"
         @typing-off="onTypingOff"
         @typing-on="onTypingOn"
+        @recording-off="onRecordingOff"
+        @recording-on="onRecordingOn"
         @focus="onFocus"
         @blur="onBlur"
       />
@@ -1159,6 +1184,8 @@ export default {
         :channel-type="channelType"
         @typing-off="onTypingOff"
         @typing-on="onTypingOn"
+        @recording-off="onRecordingOff"
+        @recording-on="onRecordingOn"
         @focus="onFocus"
         @blur="onBlur"
         @toggle-user-mention="toggleUserMention"

@@ -89,6 +89,13 @@ class ConversationApi extends ApiClient {
     });
   }
 
+  toggleRecording({ conversationId, status, isPrivate }) {
+    return axios.post(`${this.url}/${conversationId}/toggle_recording_status`, {
+      recording_status: status,
+      is_private: isPrivate,
+    });
+  }
+
   mute(conversationId) {
     return axios.post(`${this.url}/${conversationId}/mute`);
   }
