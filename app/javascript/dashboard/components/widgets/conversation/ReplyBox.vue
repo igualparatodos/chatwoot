@@ -821,10 +821,12 @@ export default {
         return;
       }
       if (!this.isRecorderAudioStopped) {
+        console.log('toggle recording on');
         this.toggleRecording('on');
         this.isRecorderAudioStopped = true;
         this.$refs.audioRecorderInput.stopRecording();
       } else if (this.isRecorderAudioStopped) {
+        console.log('toggle recording off');
         this.toggleRecording('off');
         this.$refs.audioRecorderInput.playPause();
       }
@@ -885,6 +887,7 @@ export default {
       });
     },
     toggleRecording(status) {
+      console.log('toggle recording');
       const conversationId = this.currentChat.id;
       const isPrivate = this.isPrivate;
 
