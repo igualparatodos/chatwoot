@@ -851,7 +851,7 @@ export default {
       this.isFocused = true;
     },
     onRecordProgressChanged(duration) {
-      if (!this.hasRecordStarted && this.isRecorderAudioStopped) {
+      if (!this.hasRecordStarted && !this.isRecordingAudio) {
         this.toggleRecording('on');
       }
       this.recordingAudioDurationText = duration;
