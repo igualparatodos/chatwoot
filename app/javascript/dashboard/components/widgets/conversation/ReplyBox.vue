@@ -822,12 +822,10 @@ export default {
       }
       if (!this.isRecorderAudioStopped) {
         console.log('toggle recording on');
-        this.toggleRecording('on');
+        this.toggleRecording('off');
         this.isRecorderAudioStopped = true;
         this.$refs.audioRecorderInput.stopRecording();
       } else if (this.isRecorderAudioStopped) {
-        console.log('toggle recording off');
-        this.toggleRecording('off');
         this.$refs.audioRecorderInput.playPause();
       }
     },
@@ -845,12 +843,6 @@ export default {
     onTypingOff() {
       this.toggleTyping('off');
     },
-    onRecordingOn() {
-      this.toggleRecording('on');
-    },
-    onRecordingOff() {
-      this.toggleRecording('off');
-    },
     onBlur() {
       this.isFocused = false;
       this.saveDraft(this.conversationIdByRoute, this.replyType);
@@ -859,6 +851,8 @@ export default {
       this.isFocused = true;
     },
     onRecordProgressChanged(duration) {
+      console.log('duration');
+      console.log(duration);
       this.recordingAudioDurationText = duration;
     },
     onFinishRecorder(file) {
@@ -1167,8 +1161,6 @@ export default {
         :send-with-signature="sendWithSignature"
         @typing-off="onTypingOff"
         @typing-on="onTypingOn"
-        @recording-off="onRecordingOff"
-        @recording-on="onRecordingOn"
         @focus="onFocus"
         @blur="onBlur"
       />
@@ -1188,8 +1180,6 @@ export default {
         :channel-type="channelType"
         @typing-off="onTypingOff"
         @typing-on="onTypingOn"
-        @recording-off="onRecordingOff"
-        @recording-on="onRecordingOn"
         @focus="onFocus"
         @blur="onBlur"
         @toggle-user-mention="toggleUserMention"
