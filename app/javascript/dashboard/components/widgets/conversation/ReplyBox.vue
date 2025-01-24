@@ -116,6 +116,7 @@ export default {
       newConversationModalActive: false,
       showArticleSearchPopover: false,
       hasRecordedAudio: false,
+      hasRecordStarted: false,
     };
   },
   computed: {
@@ -851,8 +852,9 @@ export default {
       this.isFocused = true;
     },
     onRecordProgressChanged(duration) {
-      console.log('duration');
-      console.log(duration);
+      if (!this.hasRecordStarted) {
+        this.toggleRecording('on');
+      }
       this.recordingAudioDurationText = duration;
     },
     onFinishRecorder(file) {
@@ -884,6 +886,8 @@ export default {
       console.log('toggle recording');
       const conversationId = this.currentChat.id;
       const isPrivate = this.isPrivate;
+      
+      this.hasRecordStarted = status === 'on';
 
       if (!conversationId) {
         console.log('no conversation id')
